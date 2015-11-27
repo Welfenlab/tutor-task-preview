@@ -1,13 +1,15 @@
-<div class="task" data-bind="template: { afterRender: $data.init.bind($data, $element) }">
-  <span class="task">
-    Task <span data-bind="text: task.number"></span>
-    <!--ko if: task.hasTitle --> &ndash; <span data-bind="text: task.title"></span><!-- /ko -->
-  </span><br/>
-  <div class="description" data-bind="attr: {'id': $data.descriptionId}"></div>
+<div data-bind="template: { afterRender: $data.init.bind($data, $element) }">
+  <div class="task">
+    <h3 class="task">
+      Task <span data-bind="text: task.number"></span>
+      <!--ko if: task.hasTitle --> &ndash; <span data-bind="text: task.title"></span><!-- /ko -->
+    </h3><br/>
+    <div class="description" data-bind="attr: {'id': $data.descriptionId}"></div>
+  </div>
+  <div class="ui horizontal divider">
+    Ihre Lösung
+  </div>
+  <!-- ko if: showSolutionPreview -->
+  <div data-bind="attr: {'id': $data.solutionId}"></div>
+  <!-- /ko -->
 </div>
-<div class="ui horizontal divider">
-  Ihre Lösung
-</div>
-<!-- ko if: showSolutionPreview -->
-<div data-bind="attr: {'id': $data.solutionId}"></div>
-<!-- /ko -->
