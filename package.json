@@ -1,0 +1,25 @@
+{
+  "name": "@tutor/task-preview",
+  "version": "0.1.0",
+  "description": "Task preview renderer for students.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Welfenlab/tutor-task-preview.git"
+  },
+  "author": "Maik Marschner <mmarschner@welfenlab.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Welfenlab/tutor-task-preview/issues"
+  },
+  "homepage": "https://github.com/Welfenlab/tutor-task-preview#readme",
+  "dependencies": {
+    "@tutor/markdown2html": "^0.2.5",
+    "cuid": "^1.3.8",
+    "knockout": "^3.4.0",
+    "lodash": "^3.10.1"
+  }
+}
