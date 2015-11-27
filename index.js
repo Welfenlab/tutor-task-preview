@@ -38,7 +38,11 @@ ViewModel.prototype.init = function(element) {
     });
 
     prev = createPreview(this.solutionId)
-    prev.render(this.task.tests() + "\n\n" + this.task.solution)
+    reRender = function() {
+      prev.render(this.task.tests() + "\n\n" + this.task.solution());
+    }.bind(this);
+    reRender();
+    this.task.solution.subscribe(reRender);
   }
 };
 
@@ -47,4 +51,6 @@ ko.components.register('tutor-task-preview', {
   viewModel: ViewModel
 });
 
-module.exports = 'tutor-task-preview';
+module.exports = {
+  markdownProcessor: md()()
+};
