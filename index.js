@@ -3,6 +3,7 @@ var _ = require('lodash');
 var cuid = require('cuid');
 var md = require('./src/markdown');
 var fs = require('fs');
+var path = require('path');
 
 var ViewModel = function(params) {
   this.descriptionId = cuid();
@@ -47,7 +48,7 @@ ViewModel.prototype.init = function(element) {
 };
 
 ko.components.register('tutor-task-preview', {
-  template: fs.readFileSync(__dirname + "/src/task_preview.html", "utf8"),
+  template: fs.readFileSync(path.join(__dirname, 'src/task_preview.html'), 'utf8'),
   viewModel: ViewModel
 });
 
