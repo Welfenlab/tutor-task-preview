@@ -2,7 +2,7 @@
   "name": "@tutor/task-preview",
   "version": "0.1.4",
   "description": "Task preview renderer for students.",
-  "main": "index.browserified.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Warning: no test specified\" && exit 0"
   },
