@@ -1,13 +1,13 @@
-var _, defaultConfig, fs, tutorMarkdown;
-fs = require('fs');
-_ = require('lodash');
-tutorMarkdown = require('@tutor/markdown2html');
+var fs = require('fs');
+var path = require('path');
+var _ = require('lodash');
+var tutorMarkdown = require('@tutor/markdown2html');
 
-defaultConfig = {
+var defaultConfig = {
   runTimeout: 1.5 * 1000,
   debugTimeout: 2 * 60 * 1000,
   codeControls: {
-    template: _.template(fs.readFileSync(__dirname + "/js_controls.html", "utf8"))
+    template: _.template(fs.readFileSync(path.join(__dirname, 'js_controls.html'), 'utf8'))
   },
   dotProcessor: {
     baseSVGTemplate: _.template("<svg data-element-id=\"<%= id %>\"><g/></svg>"),
