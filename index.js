@@ -8,12 +8,18 @@ var path = require('path');
 var ViewModel = function(params) {
   this.descriptionId = cuid();
   this.solutionId = cuid();
+  this.modelSolutionId = cuid();
   this.task = params.task;
   this.showSolutionPreview = params.showSolutionPreview !== false;
+  this.showModelSolutionPreview = params.modelSolutionPreview !== false;
 };
 
 ViewModel.prototype.init = function(element) {
   md()(this.descriptionId).render(this.task.text());
+
+  if (this.showModelSolutionPreview) {
+    md()(this.modelSolutionId).render(this.task.modelSolution());
+  }
 
   if (this.showSolutionPreview) {
     //TODO render solution
@@ -38,7 +44,7 @@ ViewModel.prototype.init = function(element) {
       }
     });
 
-    prev = createPreview(this.solutionId)
+    solutionPreview = createPreview(this.solutionId)
     reRender = function() {
       prev.render(this.task.tests() + "\n\n" + this.task.solution());
     }.bind(this);
