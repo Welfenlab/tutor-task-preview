@@ -6,10 +6,16 @@
     </h3><br/>
     <div class="description" data-bind="attr: {'id': $data.descriptionId}"></div>
   </div>
+  <!-- ko if: showSolutionPreview -->
   <div class="ui horizontal divider">
     Ihre Lösung
   </div>
-  <!-- ko if: showSolutionPreview -->
   <div data-bind="attr: {'id': $data.solutionId}"></div>
+  <!-- /ko -->
+  <!-- ko if: showModelSolutionPreview -->
+  <div class="ui horizontal divider">
+    Musterlösung
+  </div>
+  <div data-bind="attr: {'id': $data.modelSolutionId}"></div>
   <!-- /ko -->
 </div>
