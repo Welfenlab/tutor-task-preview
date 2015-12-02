@@ -46,7 +46,7 @@ ViewModel.prototype.init = function(element) {
 
     solutionPreview = createPreview(this.solutionId)
     reRender = function() {
-      prev.render(this.task.tests() + "\n\n" + this.task.solution());
+      solutionPreview.render(this.task.tests() + "\n\n" + this.task.solution());
     }.bind(this);
     reRender();
     this.task.solution.subscribe(reRender);
