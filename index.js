@@ -17,29 +17,37 @@ ViewModel.prototype.init = function(element) {
 
   if (this.showSolutionPreview) {
     //TODO render solution
-    createPreview = md({
-      testProcessor: {
-        register: function(name) {
-          if (lastEdit > curEdit)
-            return;
-          curTests[taskIdx].push({name: name, passes: false})
-        },
-        testResult: function(err, idx) {
-          if (lastEdit > curEdit)
-            return;
-          curTests[taskIdx][idx].passes = (err == null)
-        },
-        testsFinished: function() {
-          if (lastEdit > curEdit)
-            return;
-          allTests(curTests);
-        },
-        template: function() { return ""; }
-      }
-    });
-
-    prev = createPreview(this.solutionId)
-    reRender = function() {
+    var lastEdit = 0;
+    var createPreview = function(id){
+      var curEdit = lastEdit
+      var curTests = []
+      md({
+        testProcessor: {
+          register: function(name) {
+            if (lastEdit > curEdit) {
+              return;
+            }
+            // var taskIdx = this.task.?            
+            curTests[taskIdx].push({name: name, passes: false})
+          },
+          testResult: function(err, idx) {
+            if (lastEdit > curEdit)
+              return;
+            curTests[taskIdx][idx].passes = (err == null)
+          },
+          testsFinished: function() {
+            if (lastEdit > curEdit)
+              return;
+            allTests(curTests);
+          },
+          template: function() { return ""; }
+        }
+      });
+    }
+    
+    var reRender = function() {
+      var prev = createPreview(this.solutionId);
+      lastEdit = lastEdit + 1;
       prev.render(this.task.tests() + "\n\n" + this.task.solution());
     }.bind(this);
     reRender();
