@@ -13,7 +13,7 @@ var ViewModel = function(params) {
   this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
 };
-
+ 
 ViewModel.prototype.init = function(element) {
   md()(this.descriptionId).render(this.task.text());
 
