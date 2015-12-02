@@ -11,7 +11,7 @@ var ViewModel = function(params) {
   this.modelSolutionId = cuid();
   this.task = params.task;
   this.showSolutionPreview = params.showSolutionPreview !== false;
-  this.showModelSolutionPreview = params.modelSolutionPreview !== false;
+  this.showModelSolutionPreview = params.showModelSolutionPreview;
 };
 
 ViewModel.prototype.init = function(element) {
