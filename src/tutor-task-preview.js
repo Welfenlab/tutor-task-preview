@@ -6,24 +6,15 @@ var fs = require('fs');
 var path = require('path');
 require('./tutor-task-markdown')
 
-var ViewModel = function(params) {
-  this.solutionId = cuid();
-  this.modelSolutionId = cuid();
+var ViewModel = function (params) {
   this.task = ko.utils.unwrapObservable(params.task);
-  //this.showSolutionPreview = params.showSolutionPreview !== false;
-  this.showSolutionPreview = true;
+  this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
   this.testResults = params.task.testResults;
 
   this.renderedSolution = ko.computed(function() {
     return this.task.tests() + "\n\n" + this.task.solution();
   }.bind(this));
-};
-
-ViewModel.prototype.init = function(element) {
-  if (this.showModelSolutionPreview) {
-    md()(this.modelSolutionId).render(this.task.modelSolution());
-  }
 };
 
 ko.components.register('tutor-task-preview', {

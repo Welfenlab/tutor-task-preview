@@ -1,4 +1,4 @@
-<div data-bind="template: { afterRender: $data.init.bind($data, $element) }">
+<div>
   <div class="task">
     <h3 class="task">
       Task <span data-bind="text: task.number"></span>
@@ -6,17 +6,15 @@
     </h3><br/>
     <tutor-task-markdown params="markdown: task.text"></tutor-task-markdown>
   </div>
-  <!-- ko if: showSolutionPreview -->
   <div class="ui horizontal divider">
     Ihre Lösung
   </div>
   <tutor-task-markdown params="markdown: renderedSolution, testResults: testResults"></tutor-task-markdown>
-  <div data-bind="attr: {'id': $data.solutionId}"></div>
-  <!-- /ko -->
+
   <!-- ko if: showModelSolutionPreview -->
   <div class="ui horizontal divider">
     Musterlösung
   </div>
-  <div data-bind="attr: {'id': $data.modelSolutionId}"></div>
+  <tutor-task-markdown params="markdown: task.modelSolution"></tutor-task-markdown>
   <!-- /ko -->
 </div>
