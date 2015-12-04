@@ -12,7 +12,7 @@ var ViewModel = function(params) {
   this.task = params.task;
   this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
-  this.testResults = params.testResults;
+  this.testResults = params.task.testResults;
 };
  
 ViewModel.prototype.init = function(element) {
