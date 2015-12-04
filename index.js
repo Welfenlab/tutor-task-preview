@@ -27,7 +27,7 @@ ViewModel.prototype.init = function(element) {
     var createPreview = function(id){
       var curEdit = lastEdit
       var curTests = []
-      md({
+      return md({
         testProcessor: {
           register: function(name) {
             if (lastEdit > curEdit) {
