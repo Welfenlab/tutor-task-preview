@@ -24,7 +24,7 @@ ViewModel.prototype.init = function(element) {
 
   if (this.showSolutionPreview) {
     var lastEdit = 0;
-    var createPreview = function(id){
+    var createPreview = function(id) {
       var curEdit = lastEdit
       var curTests = []
       return md({
@@ -49,7 +49,7 @@ ViewModel.prototype.init = function(element) {
           },
           template: function() { return ""; }
         }
-      });
+      })(id);
     }
 
     var reRender = function() {
