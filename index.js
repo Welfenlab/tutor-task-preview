@@ -9,7 +9,7 @@ var ViewModel = function(params) {
   this.descriptionId = cuid();
   this.solutionId = cuid();
   this.modelSolutionId = cuid();
-  this.task = params.task;
+  this.task = ko.utils.unwrapObservable(params.task);
   this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
   this.testResults = params.testResults;
