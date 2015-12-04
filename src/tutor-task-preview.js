@@ -14,68 +14,15 @@ var ViewModel = function(params) {
   this.showSolutionPreview = true;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
   this.testResults = params.task.testResults;
+
+  this.renderedSolution = ko.computed(function() {
+    return this.task.tests() + "\n\n" + this.task.solution();
+  }.bind(this));
 };
 
 ViewModel.prototype.init = function(element) {
   if (this.showModelSolutionPreview) {
     md()(this.modelSolutionId).render(this.task.modelSolution());
-  }
-
-  if (this.showSolutionPreview) {
-    var lastEdit = 0;
-    var createPreview = function(id, testResults){
-      var curEdit = lastEdit
-      var curTests = {}
-      var sboxDisconnect = null
-      return md({
-        testProcessor: {
-          init: function(disconnect) {
-            if(sboxDisconnect && typeof(sboxDisconnect) == "function"){
-              sboxDisconnect()
-            }
-            sboxDisconnect = disconnect
-          },
-          register: function(name) {
-            if (lastEdit > curEdit) {
-              return;
-            }
-            curTests[name] = {name: name, status: "running", passes: undefined}
-          },
-          testResult: function(err, name) {
-            if (lastEdit > curEdit)
-              return;
-            curTests[name].passes = (err == null)
-            if(err){
-              curTests[name].error = err
-            }
-          },
-          testsFinished: function(err) {
-            if (lastEdit > curEdit)
-              return;
-            var tests = _.map(curTests, function(t){
-              if(t.status == "running"){
-                t.status = err
-              }
-              if (!t.passes /* undefined or false */) {
-                t.passes = false
-              }
-              return t
-            })
-            if (testResults)
-              testResults(tests);
-          },
-          template: function() { return ""; }
-        }
-      })(id);
-    }
-
-    var reRender = function() {
-      lastEdit = lastEdit + 1;
-      var prev = createPreview(this.solutionId, this.testResults);
-      prev.render(this.task.tests() + "\n\n" + this.task.solution())
-    }.bind(this);
-    reRender();
-    this.task.solution.subscribe(reRender);
   }
 };
 

@@ -4,12 +4,13 @@
       Task <span data-bind="text: task.number"></span>
       <!--ko if: task.hasTitle --> &ndash; <span data-bind="text: task.title"></span><!-- /ko -->
     </h3><br/>
-    <tutor-task-markdown params="markdown: task.text">
+    <tutor-task-markdown params="markdown: task.text"></tutor-task-markdown>
   </div>
   <!-- ko if: showSolutionPreview -->
   <div class="ui horizontal divider">
     Ihre Lösung
   </div>
+  <tutor-task-markdown params="markdown: renderedSolution, testResults: testResults"></tutor-task-markdown>
   <div data-bind="attr: {'id': $data.solutionId}"></div>
   <!-- /ko -->
   <!-- ko if: showModelSolutionPreview -->

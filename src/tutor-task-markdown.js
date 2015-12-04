@@ -4,15 +4,20 @@ var cuid = require('cuid');
 var md = require('./markdown');
 var fs = require('fs');
 var path = require('path');
+var PreviewRendererFactory = require('./PreviewRendererFactory');
 
-var ViewModel = function(params) {
+var ViewModel = function (params) {
   this.id = cuid();
   this.markdown = params.markdown;
+  this.testResults = params.testResults;
 };
 
 ViewModel.prototype.init = function(element) {
-  var render = md()(this.id).render(this.markdown());
-  this.markdown.subscribe(render);
+  var renderer = PreviewRendererFactory(this.id, this.testResults);
+  this.markdown.subscribe(function() {
+    renderer.render(this.markdown());
+  }.bind(this));
+  renderer.render(this.markdown());
 };
 
 ko.components.register('tutor-task-markdown', {
