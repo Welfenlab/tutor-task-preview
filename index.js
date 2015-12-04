@@ -27,7 +27,7 @@ ViewModel.prototype.init = function(element) {
     var lastEdit = 0;
     var createPreview = function(id, testResults){
       var curEdit = lastEdit
-      var curTests = []
+      var curTests = {}
       var sboxDisconnect = null
       return md({
         testProcessor: {
@@ -41,33 +41,30 @@ ViewModel.prototype.init = function(element) {
             if (lastEdit > curEdit) {
               return;
             }
-            // var taskIdx = this.task.?
-            curTests.push({name: name, status: "running", passes: undefined})
+            curTests[name] = {name: name, status: "running", passes: undefined}
           },
-          testResult: function(err, idx) {
+          testResult: function(err, name) {
             if (lastEdit > curEdit)
               return;
-            curTests[idx].passes = (err == null)
+            curTests[name].passes = (err == null)
             if(err){
-              curTests[idx].error = err
+              curTests[name].error = err
             }
           },
           testsFinished: function(err) {
             if (lastEdit > curEdit)
               return;
-            if (err) {
-              curTests = _.map(curTests, function(t){
-                if(t.status == "running"){
-                  t.status = err
-                }
-                if (!t.passes /* undefined or false */) {
-                  t.passes = false
-                }
-                return t
-              })
-            }
+            var tests = _.map(curTests, function(t){
+              if(t.status == "running"){
+                t.status = err
+              }
+              if (!t.passes /* undefined or false */) {
+                t.passes = false
+              }
+              return t
+            })
             if (testResults)
-              testResults(curTests);
+              testResults(tests);
           },
           template: function() { return ""; }
         }
