@@ -27,8 +27,15 @@ ViewModel.prototype.init = function(element) {
     var createPreview = function(id){
       var curEdit = lastEdit
       var curTests = []
-      md({
+      var sboxDisconnect = null
+      return md({
         testProcessor: {
+          init: function(disconnect) {
+            if(sboxDisconnect && typeof(sboxDisconnect) == "function"){
+              sboxDisconnect()
+            }
+            sboxDisconnect = disconnect
+          },
           register: function(name) {
             if (lastEdit > curEdit) {
               return;
