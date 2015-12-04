@@ -10,7 +10,8 @@ var ViewModel = function(params) {
   this.solutionId = cuid();
   this.modelSolutionId = cuid();
   this.task = ko.utils.unwrapObservable(params.task);
-  this.showSolutionPreview = params.showSolutionPreview !== false;
+  //this.showSolutionPreview = params.showSolutionPreview !== false;
+  this.showSolutionPreview = true;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
   this.testResults = params.task.testResults;
 };
@@ -41,16 +42,30 @@ ViewModel.prototype.init = function(element) {
               return;
             }
             // var taskIdx = this.task.?
-            curTests.push({name: name, passes: false})
+            curTests.push({name: name, status: "running", passes: undefined})
           },
           testResult: function(err, idx) {
             if (lastEdit > curEdit)
               return;
             curTests[idx].passes = (err == null)
+            if(err){
+              curTests[idx].error = err
+            }
           },
-          testsFinished: function() {
+          testsFinished: function(err) {
             if (lastEdit > curEdit)
               return;
+            if (err) {
+              curTests = _.map(curTests, function(t){
+                if(t.status == "running"){
+                  t.status = err
+                }
+                if (!t.passes /* undefined or false */) {
+                  t.passes = false
+                }
+                return t
+              })
+            }
             if (testResults)
               testResults(curTests);
           },
