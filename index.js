@@ -56,13 +56,13 @@ ViewModel.prototype.init = function(element) {
           },
           template: function() { return ""; }
         }
-      });
+      })(id);
     }
 
     var reRender = function() {
-      var prev = createPreview(this.solutionId);
       lastEdit = lastEdit + 1;
-      prev.render(this.task.tests() + "\n\n" + this.task.solution());
+      var prev = createPreview(this.solutionId);
+      prev.render(this.task.tests() + "\n\n" + this.task.solution())
     }.bind(this);
     reRender();
     this.task.solution.subscribe(reRender);
