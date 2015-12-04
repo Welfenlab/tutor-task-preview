@@ -12,6 +12,7 @@ var ViewModel = function(params) {
   this.task = params.task;
   this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
+  this.testResults = params.testResults;
 };
  
 ViewModel.prototype.init = function(element) {
@@ -22,7 +23,6 @@ ViewModel.prototype.init = function(element) {
   }
 
   if (this.showSolutionPreview) {
-    //TODO render solution
     var lastEdit = 0;
     var createPreview = function(id){
       var curEdit = lastEdit
@@ -33,24 +33,25 @@ ViewModel.prototype.init = function(element) {
             if (lastEdit > curEdit) {
               return;
             }
-            // var taskIdx = this.task.?            
-            curTests[taskIdx].push({name: name, passes: false})
+            // var taskIdx = this.task.?
+            curTests.push({name: name, passes: false})
           },
           testResult: function(err, idx) {
             if (lastEdit > curEdit)
               return;
-            curTests[taskIdx][idx].passes = (err == null)
+            curTests[idx].passes = (err == null)
           },
           testsFinished: function() {
             if (lastEdit > curEdit)
               return;
-            allTests(curTests);
+            if (this.testResults)
+              this.testResults(curTests);
           },
           template: function() { return ""; }
         }
       });
     }
-    
+
     var reRender = function() {
       var prev = createPreview(this.solutionId);
       lastEdit = lastEdit + 1;
