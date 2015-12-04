@@ -4,7 +4,7 @@
       Task <span data-bind="text: task.number"></span>
       <!--ko if: task.hasTitle --> &ndash; <span data-bind="text: task.title"></span><!-- /ko -->
     </h3><br/>
-    <div class="description" data-bind="attr: {'id': $data.descriptionId}"></div>
+    <tutor-task-markdown params="markdown: task.text">
   </div>
   <!-- ko if: showSolutionPreview -->
   <div class="ui horizontal divider">
