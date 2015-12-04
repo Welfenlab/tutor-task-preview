@@ -12,9 +12,9 @@ var ViewModel = function(params) {
   this.task = params.task;
   this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
-  this.testResults = params.testResults;
+  this.testResults = params.task.testResults;
 };
-
+ 
 ViewModel.prototype.init = function(element) {
   md()(this.descriptionId).render(this.task.text());
 
@@ -24,11 +24,18 @@ ViewModel.prototype.init = function(element) {
 
   if (this.showSolutionPreview) {
     var lastEdit = 0;
-    var createPreview = function(id){
+    var createPreview = function(id, testResults){
       var curEdit = lastEdit
       var curTests = []
-      md({
+      var sboxDisconnect = null
+      return md({
         testProcessor: {
+          init: function(disconnect) {
+            if(sboxDisconnect && typeof(sboxDisconnect) == "function"){
+              sboxDisconnect()
+            }
+            sboxDisconnect = disconnect
+          },
           register: function(name) {
             if (lastEdit > curEdit) {
               return;
@@ -44,17 +51,17 @@ ViewModel.prototype.init = function(element) {
           testsFinished: function() {
             if (lastEdit > curEdit)
               return;
-            if (this.testResults)
-              this.testResults(curTests);
+            if (testResults)
+              testResults(curTests);
           },
           template: function() { return ""; }
         }
-      });
+      })(id);
     }
 
     var reRender = function() {
-      var prev = createPreview(this.solutionId);
       lastEdit = lastEdit + 1;
+      var prev = createPreview(this.solutionId, this.testResults);
       prev.render(this.task.tests() + "\n\n" + this.task.solution())
     }.bind(this);
     reRender();
