@@ -8,12 +8,15 @@ require('./tutor-task-markdown')
 
 var ViewModel = function (params) {
   this.task = ko.utils.unwrapObservable(params.task);
-  this.showSolutionPreview = params.showSolutionPreview !== false;
   this.showModelSolutionPreview = params.showModelSolutionPreview;
   this.testResults = params.task.testResults;
 
   this.renderedSolution = ko.computed(function() {
-    return this.task.tests() + "\n\n" + this.task.solution();
+    if (this.task.tests) {
+      return this.task.tests() + "\n\n" + this.task.solution();
+    } else {
+      return this.task.solution();
+    }
   }.bind(this));
 };
 
