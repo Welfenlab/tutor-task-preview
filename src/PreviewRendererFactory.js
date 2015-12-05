@@ -12,12 +12,12 @@ var PreviewRendererFactory = function (id, setTestResults) {
         init: function (disconnect) {
           sboxDisconnect = disconnect;
         },
-        register: function(name, testCode) {
+        register: function(test) {
           if (lastEdit <= renderer.__curEdit) {
             curTests[name] = {
-              name: name,
+              name: test.name,
               status: "running",
-              test: testCode,
+              test: test.code,
               passes: undefined
             };
           }
