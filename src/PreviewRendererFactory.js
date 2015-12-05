@@ -20,6 +20,7 @@ var PreviewRendererFactory = function (id, setTestResults) {
               test: test.code,
               passes: undefined
             };
+            setTestResults(_.map(curTests, _.identity))
           }
         },
         testResult: function(err, name) {
@@ -27,6 +28,7 @@ var PreviewRendererFactory = function (id, setTestResults) {
             curTests[name].passes = (err == null);
             curTests[name].status = "finished"
             curTests[name].error = err;
+            setTestResults(_.map(curTests, _.identity))
           }
         },
         testsFinished: function(err) {
