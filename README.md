@@ -11,8 +11,8 @@ After this module is required, the following two components are available:
   Displays markdown fields and titles for an entire _task_, this includes the
   task description, the solution and a model solution.
 
-[ko-elem]:http://knockoutjs.com/documentation/component-overview.html
-[md2h]:https://github.com/Welfenlab/tutor-markdown2html
+[ko-elem]: http://knockoutjs.com/documentation/component-overview.html
+[md2h]: https://github.com/Welfenlab/tutor-markdown2html
 
 ## Usage
 
@@ -67,3 +67,20 @@ var viewModel = {
 ```html
 <tutor-task-preview params="task: task"></tutor-task-preview>
 ```
+
+## Stylesheet
+We also provide a default stylesheet that fixes display bugs with graphs and
+another one that also makes tables somewhat more beautiful. If you're using
+[LESS][less], you can import either of the following files with
+[less-plugin-npm-import][less-npm].
+
+```css
+ /* fixes only */
+@import "npm://@tutor/task-preview/res/fixes";
+
+/* fixes + default style */
+@import "npm://@tutor/task-preview/res/default-style";
+```
+
+[less]: http://lesscss.org/
+[less-npm]: https://github.com/less/less-plugin-npm-import
