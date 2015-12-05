@@ -5,23 +5,19 @@ var PreviewRendererFactory = function (id, setTestResults) {
   var lastEdit = 0
   var curTests = {}
   var renderer;
-
+  var sboxDisconnect = null
   if (setTestResults) {
-    var sboxDisconnect = null
-
     renderer = md({
       testProcessor: {
         init: function (disconnect) {
-          if(sboxDisconnect && typeof(sboxDisconnect) == "function"){
-            sboxDisconnect()
-          }
           sboxDisconnect = disconnect;
         },
-        register: function(name) {
+        register: function(name, testCode) {
           if (lastEdit <= renderer.__curEdit) {
             curTests[name] = {
               name: name,
               status: "running",
+              test: testCode,
               passes: undefined
             };
           }
@@ -29,6 +25,7 @@ var PreviewRendererFactory = function (id, setTestResults) {
         testResult: function(err, name) {
           if (lastEdit <= renderer.__curEdit) {
             curTests[name].passes = (err == null);
+            curTests[name].status = "finished"
             curTests[name].error = err;
           }
         },
@@ -57,6 +54,10 @@ var PreviewRendererFactory = function (id, setTestResults) {
       curTests = {}
       lastEdit++;
       renderer.__curEdit = lastEdit;
+      // if there is still another instance of the sandbox environment running, kill it.
+      if(sboxDisconnect && typeof(sboxDisconnect) == "function"){
+        sboxDisconnect()
+      }
       return renderer.render.apply(null, arguments);
     }
   };
