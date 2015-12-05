@@ -14,7 +14,7 @@ var PreviewRendererFactory = function (id, setTestResults) {
         },
         register: function(test) {
           if (lastEdit <= renderer.__curEdit) {
-            curTests[name] = {
+            curTests[test.name] = {
               name: test.name,
               status: "running",
               test: test.code,
