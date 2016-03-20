@@ -53,6 +53,8 @@ The `<tutor-task-preview>` element has three parameters:
     as the `testResults` callback (as described above)
 * `showModelSolutionPreview` _(optional, defaults to false)_ displays the markdown
   specified in `task.modelSolution()` below the solution
+* `autoRefresh` _(optional, defaults to `true`)_ whether the markdown preview of
+  the solution should be updated when the markdown changes
 
 #### Example
 ```js
