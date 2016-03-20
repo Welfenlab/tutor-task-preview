@@ -10,14 +10,23 @@ var ViewModel = function (params) {
   this.id = cuid();
   this.markdown = params.markdown;
   this.testResults = params.testResults;
+  this.autoRefresh = params.autoRefresh || ko.observable(true);
 };
 
 ViewModel.prototype.init = function(element) {
-  var renderer = PreviewRendererFactory(this.id, this.testResults);
+  this.renderer = PreviewRendererFactory(this.id, this.testResults);
+  this.renderer.render(this.markdown());
+
   this.markdown.subscribe(function() {
-    renderer.render(this.markdown());
+    if (this.autoRefresh()) {
+      this.renderer.render(this.markdown());
+    }
   }.bind(this));
-  renderer.render(this.markdown());
+
+  this.autoRefresh.subscribe(function() {
+    //re-render whenever autoRefresh is changed
+    this.renderer.render(this.markdown());
+  }.bind(this));
 };
 
 ko.components.register('tutor-task-markdown', {

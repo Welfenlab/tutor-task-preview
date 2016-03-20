@@ -10,6 +10,7 @@ var ViewModel = function (params) {
   this.task = ko.utils.unwrapObservable(params.task);
   this.showModelSolutionPreview = params.showModelSolutionPreview;
   this.testResults = params.task.testResults;
+  this.autoRefresh = params.autoRefresh || ko.observable(true);
 
   this.renderedSolution = ko.computed(function() {
     if (this.task.tests) {
